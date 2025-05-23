@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>.VLT — Operations Command Center</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary-cyan: #00ffff;
+      --secondary-cyan: #00cccc;
+      --warning-red: #ff3333;
+      --success-green: #33ff33;
+      --caution-yellow: #ffff00;
+      --dark-bg: #0a0a0a;
+      --card-bg: #111111;
+      --border-color: #222222;
+      --text-primary: #ffffff;
+      --text-secondary: #c5c7c6;
+      --text-muted: #666666;
+      --accent-glow: rgba(0, 255, 255, 0.3);
+      --surveillance-pulse: rgba(255, 51, 51, 0.2);
+      --operations-orange: #ff6600;
+      --intel-purple: #9933ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0; 
+      padding: 0; 
+      height: 100%;
+      background: linear-gradient(135deg, var(--dark-bg) 0%, #0f0f0f 50%, var(--dark-bg) 100%);
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.05em;
+      font-weight: 400;
+      user-select: none;
+      min-width: 320px;
+      overflow-x: hidden;
+    }
+
+    /* Enhanced animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(0,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(45deg, rgba(255,51,51,0.03) 2px, transparent 2px),
+        linear-gradient(-45deg, rgba(153,51,255,0.02) 1px, transparent 1px);
+      background-size: 50px 50px, 50px 50px, 100px 100px, 75px 75px;
+      animation: gridMove 25s linear infinite, scanlines 12s linear infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    @keyframes scanlines {
+      0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: 0 0, 0 0, 0 100px, 0 75px; }
+    }
+
+    /* Status indicators */
+    .status-panel {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 1000;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(17, 17, 17, 0.9);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      backdrop-filter: blur(10px);
+      border: 1px solid transparent;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    .status-operations { border-color: var(--operations-orange); color: var(--operations-orange); }
+    .status-intelligence { border-color: var(--intel-purple); color: var(--intel-purple); }
+    .status-surveillance { border-color: var(--warning-red); color: var(--warning-red); }
+    .status-control { border-color: var(--success-green); color: var(--success-green); }
+
+    .status-operations .status-dot { background: var(--operations-orange); }
+    .status-intelligence .status-dot { background: var(--intel-purple); }
+    .status-surveillance .status-dot { background: var(--warning-red); }
+    .status-control .status-dot { background: var(--success-green); }
+
+    @keyframes statusPulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    nav {
+      background: rgba(17, 17, 17, 0.98);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(0, 255, 255, 0.15);
+    }
+
+    nav .logo {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      color: var(--primary-cyan);
+      font-size: 1.5rem;
+      text-shadow: 0 0 15px var(--accent-glow);
+      animation: logoGlow 3s ease-in-out infinite alternate;
+      position: relative;
+    }
+
+    nav .logo::after {
+      content: 'COMMAND CENTER';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      font-size: 0.4rem;
+      color: var(--caution-yellow);
+      letter-spacing: 0.2em;
+      font-weight: 400;
+      opacity: 0.8;
+      white-space: nowrap;
+    }
+
+    @keyframes logoGlow {
+      0% { text-shadow: 0 0 15px var(--accent-glow); }
+      100% { text-shadow: 0 0 25px var(--accent-glow), 0 0 35px var(--accent-glow); }
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-tab {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: transparent;
+      font-family: inherit;
+      font-size: inherit;
+      text-transform: inherit;
+      letter-spacing: inherit;
+    }
+
+    .nav-tab.active {
+      color: var(--primary-cyan);
+      background: rgba(0, 255, 255, 0.1);
+      border-color: rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+
+    .nav-tab:hover:not(.active) {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .clearance-badge {
+      background: linear-gradient(45deg, var(--warning-red), #cc2222);
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      animation: clearanceBlink 4s ease-in-out infinite;
+    }
+
+    @keyframes clearanceBlink {
+      0%, 85% { opacity: 1; }
+      90% { opacity: 0.3; }
+      95% { opacity: 1; }
+    }
+
+    main {
+      padding: 2rem;
+      min-height: calc(100vh - 120px);
+    }
+
+    .module {
+      display: none;
+      opacity: 0;
+      animation: moduleSlideIn 0.6s ease-out forwards;
+    }
+
+    .module.active {
+      display: block;
+    }
+
+    @keyframes moduleSlideIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .module-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .module-title {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: clamp(2rem, 4vw, 3rem);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin: 0 0 0.5rem 0;
+      text-shadow: 0 0 20px currentColor;
+      position: relative;
+    }
+
+    .module-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .operations { color: var(--operations-orange); }
+    .intelligence { color: var(--intel-purple); }
+    .surveillance { color: var(--warning-red); }
+    .control { color: var(--success-green); }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .dashboard-card {
+      background: linear-gradient(145deg, var(--card-bg), #0f0f0f);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: left 0.8s ease;
+    }
+
+    .dashboard-card:hover::before {
+      left: 100%;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .card-status {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.3rem 0.8rem;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .status-active { background: rgba(51, 255, 51, 0.2); color: var(--success-green); }
+    .status-warning { background: rgba(255, 255, 0, 0.2); color: var(--caution-yellow); }
+    .status-critical { background: rgba(255, 51, 51, 0.2); color: var(--warning-red); }
+    .status-processing { background: rgba(0, 255, 255, 0.2); color: var(--primary-cyan); }
+
+    .card-content {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .metric {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .metric-value {
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary-cyan);
+      text-shadow: 0 0 10px currentColor;
+    }
+
+    .metric-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .operations-grid .dashboard-card:hover { border-color: var(--operations-orange); }
+    .intelligence-grid .dashboard-card:hover { border-color: var(--intel-purple); }
+    .surveillance-grid .dashboard-card:hover { border-color: var(--warning-red); }
+    .control-grid .dashboard-card:hover { border-color: var(--success-green); }
+
+    .command-terminal {
+      background: linear-gradient(145deg, var(--card-bg), #0f0f0f);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .terminal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .terminal-title {
+      color: var(--primary-cyan);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .terminal-output {
+      background: #000;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 1.5rem;
+      height: 200px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .terminal-line {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .terminal-prompt {
+      color: var(--success-green);
+      font-weight: 700;
+    }
+
+    .terminal-timestamp {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .terminal-message {
+      color: var(--text-secondary);
+    }
+
+    .terminal-warning { color: var(--caution-yellow); }
+    .terminal-error { color: var(--warning-red); }
+    .terminal-success { color: var(--success-green); }
+
+    .loading-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--border-color);
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+
+    .loading-progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-cyan), var(--warning-red), var(--primary-cyan));
+      border-radius: 2px;
+      animation: loadingAnimation 2s ease-in-out infinite;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    @keyframes loadingAnimation {
+      0% { background-position: -200px 0; }
+      100% { background-position: 200px 0; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      background: rgba(17, 17, 17, 0.95);
+      backdrop-filter: blur(15px);
+      position: relative;
+    }
+
+    footer::before {
+      content: 'CLASSIFIED OPERATION - COMPARTMENTALIZED ACCESS - NEED TO KNOW BASIS';
+      position: absolute;
+      top: 0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      color: var(--warning-red);
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .status-panel {
+        position: relative;
+        top: 0;
+        right: 0;
+        flex-direction: row;
+        justify-content: center;
+        margin: 1rem;
+        flex-wrap: wrap;
+      }
+
+      nav .nav-links {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-tab {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      main {
+        padding: 1rem;
+      }
+    }
+
+    /* Glitch effect */
+    .glitch {
+      animation: glitch 0.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); filter: hue-rotate(0deg); }
+      20% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); }
+      40% { transform: translate(-2px, -2px); filter: hue-rotate(180deg); }
+      60% { transform: translate(2px, 2px); filter: hue-rotate(270deg); }
+      80% { transform: translate(2px, -2px); filter: hue-rotate(360deg); }
+      100% { transform: translate(0); filter: hue-rotate(0deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="status-panel">
+    <div class="status-indicator status-operations">
+      <div class="status-dot"></div>
+      <span>OPS</span>
+    </div>
+    <div class="status-indicator status-intelligence">
+      <div class="status-dot"></div>
+      <span>INTEL</span>
+    </div>
+    <div class="status-indicator status-surveillance">
+      <div class="status-dot"></div>
+      <span>SURV</span>
+    </div>
+    <div class="status-indicator status-control">
+      <div class="status-dot"></div>
+      <span>CTRL</span>
+    </div>
+  </div>
+
+  <nav>
+    <div class="logo">.VLT</div>
+    <div class="nav-links">
+      <button class="nav-tab active" onclick="switchModule('operations')">Operations</button>
+      <button class="nav-tab" onclick="switchModule('intelligence')">Intelligence</button>
+      <button class="nav-tab" onclick="switchModule('surveillance')">Surveillance</button>
+      <button class="nav-tab" onclick="switchModule('control')">Control</button>
+      <div class="clearance-badge">OMEGA CLEARANCE</div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- OPERATIONS MODULE -->
+    <div id="operations" class="module active">
+      <div class="module-header">
+        <h1 class="module-title operations">Operations Division</h1>
+        <p class="module-subtitle">[FIELD DEPLOYMENT & TACTICAL COORDINATION]</p>
+      </div>
+
+      <div class="dashboard-grid operations-grid">
+        <div class="dashboard-card" onclick="triggerAction('operation-phoenix')">
+          <div class="card-header">
+            <div class="card-title">Operation Phoenix</div>
+            <div class="card-status status-active">Active</div>
+          </div>
+          <div class="card-content">
+            Deep cover infiltration of resistance cells. Asset deployment across 12 metropolitan zones with full neural link synchronization.
+          </div>
+          <div class="card-metrics">
+            <div class="metric">
+              <div class="metric-value">47</div>
+              <div class="metric-label">Active Assets</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">91%</div>
+              <div class="metric-label">Success Rate</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">23</div>
+              <div class="metric-label">Targets Acquired</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card" onclick="triggerAction('memory-cleanse')">
+          <div class="card-header">
+            <div class="card-title">Memory Cleanse Protocol</div>
+            <div class="card-status status-processing">Processing</div>
+          </div>
+          <div class="card-content">
+            Selective memory modification of high-value targets. Quantum neural interface ensures seamless personality integration.
+          </div>
+          <div class="card-metrics">
+            <div class="metric">
+              <div class="metric-value">156</div>
+              <div class="metric-label">Subjects</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">78%</div>
+              <div class="metric-label">Complete</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">0</div>
+              <div class="metric-label">Failures</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card" onclick="triggerAction('social-harmony')">
+          <div class="card-header">
+            <div class="card-title">Social Harmony Initiative</div>
+            <div class="card-status status-warning">Monitoring</div>
+          </div>
+          <div class="card-content">
+            Population compliance optimization through targeted dopamine regulation. Maintaining optimal happiness levels at 87.3%.
+          </div>
+          <div class="card-metrics">
+            <div class="metric">
+              <div class="metric-value">2.1M</div>
+              <div class="metric-label">Citizens</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">87.3%</div>
+              <div class="metric-label">Happiness</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">0.2%</div>
+              <div class="metric-label">Dissent</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card" onclick="triggerAction('neural-compliance')">
+          <div class="card-header">
+            <div class="card-title">Neural Compliance Grid</div>
+            <div class="card-status status-critical">Attention Required</div>
+          </div>
+          <div class="card-content">
+            Subliminal behavioral modification through urban infrastructure. Frequency modulation requires immediate calibration.
+          </div>
+          <div class="card-metrics">
+            <div class="metric">
+              <div class="metric-value">847</div>
+              <div class="metric-label">Nodes</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">94%</div>
+              <div class="metric-label">Coverage</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">12</div>
+              <div class="metric-label">Anomalies</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTELLIGENCE MODULE -->
+    <div id="intelligence" class="module">
+      <div class="module-header">
+        <h1 class="module-title intelligence">Intelligence Division</h1>
+        <p class="module-subtitle">[DATA ACQUISITION & PREDICTIVE ANALYSIS]</p>
+      </div>
+
+      <div class="dashboard-grid intelligence-grid">
+        <div class="dashboard-card" onclick="triggerAction('omninet-analysis')">
+          <div class="card-header">
+            <div class="card-title">Omninet Data Mining</div>
+            <div class="card-status status-active">Scanning</div>
+          </div>
+          <div class="card-content">
+            Real-time analysis of all digital communications, financial transactions, and biometric data across the global network.
+          </div>
+          <div class="card-metrics">
+            <div class="metric">
+              <div class="metric-value">47TB</div>
+              <div class="metric-label">Daily Intake</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">99.7%</div>
+              <div class="metric-label">Coverage</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">23K</div>
+              <div class="metric-label">Flags</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card" onclick="triggerAction('predictive-modeling')">
+          <div class="card-header">
+            <div class="card-title">Behavioral Prediction Engine</div>
+            <div class="card-status status-processing">Computing</div>
+          </div>
+          <div class="card-content">
+            Advanced AI modeling to predict individual actions 72 hours in advance. Quantum probability matrices ensure 96.4% accuracy.
+          </div>
+          <div class="card-metrics">
+            <div class="metric">
+              <div class="metric-value">96.4%</div>
+              <div class="metric-label">Accuracy</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">8.7M</div>
+              <div class="metric-label">Profiles</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">72h</div>
+              <div class="metric-label">Horizon</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card" onclick="triggerAction('threat-assessment')">
+          <div class="card-header">
+            <div class="card-title">Threat Assessment Matrix</div>
+            <div class="card-status status-warning">Elevated</div>
+          </div>
+          <div class="card-content">
+            Continuous evaluation of potential dissidents and resistance formation. Neural pattern recognition identifies pre-crime indicators.
+          </div>
+          <div class="card-metrics">
+            <div class="metric">
+              <div class="metric-value">1,247</div>
+              <div class="metric-label">High Risk</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">45</div>
+              <div class="metric-label">Imminent</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">3</div>
+              <div class="metric-label">Critical</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card" onclick="triggerAction('memory-forensics')">
+          <div class="card-header">
+            <div class="card-title">Memory Forensics Lab</div>
+            <div class="card-status status-active">Processing</div>
+          </div>
+          <div class="card-content">
+            Direct neural extraction and analysis of suppressed memories. Quantum entanglement ensures complete data recovery.
+          </div>
+          <div class="card-metrics">
+            <div class="metric">
+              <div class="metric-value">89</div>
+              <div class="metric-label">Extractions</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">100%</div>
+              <div class="metric-label">Recovery</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">12</div>
+              <div class="metric-label">Pending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SURVEILLANCE MODULE -->
+    <div id="surveillance" class="module">
+      <div class="module-header">
+        <h1 class="module-title surveillance">Surveillance Division</h1>
+        <p class="module-subtitle">[OMNIPRESENT MONITORING & CITIZEN TRACKING]</p>
+      </div>
+
+      <div class="dashboard-grid surveillance-grid">
+        <div class="dashboard-card" onclick="triggerAction('panopticon-network')">
+          <div class="card-header">
+            <div class="card-title">Panopticon Network</div>
+            <div class="card-status status-active">Online</div>
+          </div>
+          <div class="card-content">
+            Comprehensive visual surveillance grid with facial recognition and behavioral analysis. Every citizen tracked in real-time.
+          </div>
+          <div class="card-metrics">
+            <div class="metric">
+              <div class="metric-value">47K</div>
+              <div class="metric-label">Cameras</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">99.9%</div>
+              <div class="metric-label">Uptime</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">2.1M</div>
+              <div class="metric-label">Tracked</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card" onclick="triggerAction('biometric-tracking')">
+          <div class="card-header">
+            <div class="card-title">Biometric Tracking System</div
