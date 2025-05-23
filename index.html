@@ -1,112 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nexather Analytics</title>
+  <meta charset="UTF-8">
+  <title>Nexather Group</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0e0e0e;
-      color: #e0e0e0;
+      background-color: #0d1117;
+      color: #c9d1d9;
     }
-
-    header {
-      background-color: #111;
-      padding: 1.5em 2em;
-      border-bottom: 2px solid #222;
+    .navbar {
+      background-color: #161b22;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.8em;
-      color: #00aaff;
+    .navbar-brand {
+      font-weight: bold;
+      color: #58a6ff !important;
     }
-
-    nav {
-      margin-top: 0.5em;
+    .hero {
+      padding: 80px 0;
     }
-
-    nav a {
-      margin-right: 2em;
-      text-decoration: none;
-      color: #ccc;
-      font-weight: 500;
+    .hero h1 {
+      font-size: 3rem;
+      color: #58a6ff;
     }
-
-    nav a:hover {
-      color: #00aaff;
-    }
-
-    main {
-      padding: 3em 2em;
-      max-width: 960px;
-      margin: auto;
-    }
-
-    .tagline {
-      font-size: 1.5em;
-      margin-bottom: 0.5em;
-      color: #66ccff;
-    }
-
-    .section {
-      margin-top: 2em;
-    }
-
-    .section h2 {
-      color: #00aaff;
-      border-bottom: 1px solid #222;
-      padding-bottom: 0.3em;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2em;
-      font-size: 0.9em;
-      color: #777;
-      border-top: 1px solid #222;
-      margin-top: 3em;
+    .footer {
+      background-color: #161b22;
+      color: #8b949e;
+      padding: 2rem 0;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Nexather Analytics</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="systems.html">Systems</a>
-      <a href="contact.html">Contact</a>
-    </nav>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Nexather</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="services.html">Solutions</a></li>
+          <li class="nav-item"><a class="nav-link" href="internal.html" style="display: none;">Access</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero text-center container">
+    <h1>Urban Stability Through Data</h1>
+    <p class="lead mt-3">Predictive infrastructure. Discreet integration. Targeted foresight.</p>
   </header>
 
-  <main>
-    <p class="tagline">Urban Intelligence. Behavioral Oversight. Predictive Efficiency.</p>
+  <section class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Our Mission</h2>
+        <p>Nexather Group empowers Tier 1 urban authorities with silent integration of real-time behavioral analytics across metropolitan sectors. Our modular systems enable situational foresight, risk scoring, and infrastructural control at scale.</p>
+      </div>
+      <div class="col-md-6">
+        <h2>Core Systems</h2>
+        <ul>
+          <li>Signal-tier Entity Profiling (SEP)</li>
+          <li>Long-Pattern Routing Nodes (LPRN)</li>
+          <li>Cross-Zone Compliance Monitoring (CZCM)</li>
+          <li>Biometric Predictive Forecast Engine (BPFE)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <section class="section">
-      <h2>About Us</h2>
-      <p>
-        Nexather Analytics provides scalable surveillance telemetry and predictive population behavior systems to key metropolitan clients. We specialize in high-fidelity motion capture analysis, airborne signal networks, and proactive civic modeling. 
-      </p>
-      <p>
-        Our mission is clear: enable control, optimize outcomes, and ensure cohesion across all urban zones.
-      </p>
-    </section>
-
-    <section class="section">
-      <h2>Core Services</h2>
-      <ul>
-        <li>Zone-wide Predictive Tracking</li>
-        <li>Non-intrusive Biometric Collection</li>
-        <li>Autonomous Signal Routing (ASR)</li>
-        <li>Pattern-Based Threat Identification</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer>
-    © 2045 Nexather Group. All Rights Reserved. | Tier 1 Governmental License Active
+  <footer class="footer text-center mt-5">
+    <div class="container">
+      <p>© 2045 Nexather Holdings. Operational Certificate #REDACTED. All Systems Monitored.</p>
+    </div>
   </footer>
 </body>
 </html>
