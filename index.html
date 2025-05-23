@@ -2,98 +2,164 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Nexather Group</title>
+  <title>NEXATHER SYSTEMS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
     html, body {
+      margin: 0; padding: 0;
       height: 100%;
-      margin: 0;
+      background: #0a0a0a;
+      color: #c5c7c6;
+      font-family: 'IBM Plex Mono', monospace;
       display: flex;
       flex-direction: column;
-      background-color: #0d1117;
-      color: #c9d1d9;
+      letter-spacing: 0.05em;
+      font-weight: 400;
     }
-    body > nav {
+    body > nav, footer {
       flex-shrink: 0;
     }
     main {
       flex: 1 0 auto;
-      padding: 2rem 1rem;
-      max-width: 960px;
-      margin: auto;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 2rem;
+      line-height: 1.4;
     }
-    .navbar {
-      background-color: #161b22;
+    nav {
+      background: #111;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #222;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .navbar-brand {
-      font-weight: bold;
-      color: #58a6ff !important;
+    nav .logo {
+      color: #66ffcc;
+      font-weight: 700;
+      font-size: 1.25rem;
+      user-select: none;
     }
-    .hero {
-      padding: 80px 0;
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0; padding: 0;
+    }
+    nav a {
+      color: #666;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #66ffcc;
+    }
+    h1, h2 {
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #66ffcc;
+      margin: 0 0 1rem 0;
+      letter-spacing: 0.15em;
+    }
+    h1 {
+      grid-column: 1 / -1;
+      font-size: 2.5rem;
+      border-bottom: 1px solid #222;
+      padding-bottom: 0.5rem;
+      user-select: none;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    p, ul {
+      margin: 0;
+      color: #bbb;
+      font-size: 0.9rem;
+      user-select: text;
+    }
+    ul {
+      padding-left: 1.25rem;
+      list-style-type: none;
+    }
+    ul li {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    ul li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #66ffcc;
+      font-weight: 700;
+    }
+    footer {
+      background: #111;
+      color: #444;
+      padding: 1rem 2rem;
+      font-size: 0.75rem;
       text-align: center;
+      letter-spacing: 0.1em;
+      border-top: 1px solid #222;
+      user-select: none;
     }
-    .hero h1 {
-      font-size: 3rem;
-      color: #58a6ff;
-    }
-    .footer {
-      flex-shrink: 0;
-      background-color: #161b22;
-      color: #8b949e;
-      padding: 2rem 0;
-      text-align: center;
-    }
-    nav .nav-link:hover {
-      color: #58a6ff !important;
+    /* Hide "Access" nav item but keep space for potential */
+    nav ul li.hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">Nexather</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="services.html">Solutions</a></li>
-          <li class="nav-item"><a class="nav-link" href="internal.html" style="display:none;">Access</a></li>
-        </ul>
-      </div>
-    </div>
+  <nav>
+    <div class="logo">NEXATHER</div>
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="about.html">ABOUT</a></li>
+      <li><a href="services.html">SOLUTIONS</a></li>
+      <li class="hidden"><a href="internal.html">ACCESS</a></li>
+    </ul>
   </nav>
 
   <main>
-    <header class="hero">
-      <h1>Urban Stability Through Data</h1>
-      <p class="lead mt-3">Predictive infrastructure. Discreet integration. Targeted foresight.</p>
-    </header>
+    <h1>URBAN STABILITY THROUGH DATA</h1>
 
-    <section class="row">
-      <div class="col-md-6">
-        <h2>Our Mission</h2>
-        <p>
-          Nexather Group empowers Tier 1 urban authorities with silent integration of real-time behavioral analytics across metropolitan sectors. Our modular systems enable situational foresight, risk scoring, and infrastructural control at scale.
-        </p>
-      </div>
-      <div class="col-md-6">
-        <h2>Core Systems</h2>
-        <ul>
-          <li>Signal-tier Entity Profiling (SEP)</li>
-          <li>Long-Pattern Routing Nodes (LPRN)</li>
-          <li>Cross-Zone Compliance Monitoring (CZCM)</li>
-          <li>Biometric Predictive Forecast Engine (BPFE)</li>
-        </ul>
-      </div>
+    <section>
+      <h2>OUR MISSION</h2>
+      <p>
+        NEXATHER SYSTEMS operates as a behavioral and infrastructural integration partner, delivering real-time data analytics and compliance enforcement across metropolitan environments.
+      </p>
+      <p>
+        Our systems enable preemptive situational foresight, risk scoring, and behavioral modulation to ensure order and efficiency within Tier 1 jurisdictions.
+      </p>
+    </section>
+
+    <section>
+      <h2>CORE SYSTEMS</h2>
+      <ul>
+        <li>SIGNAL-TIER ENTITY PROFILING (SEP)</li>
+        <li>LONG-PATTERN ROUTING NODES (LPRN)</li>
+        <li>CROSS-ZONE COMPLIANCE MONITORING (CZCM)</li>
+        <li>BIOMETRIC PREDICTIVE FORECAST ENGINE (BPFE)</li>
+      </ul>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <p>© 2045 Nexather Holdings. Operational Certificate #REDACTED. All Systems Monitored.</p>
-    </div>
+  <footer>
+    © 2045 NEXATHER HOLDINGS. OPERATIONAL CERTIFICATE #REDACTED. ALL SYSTEMS MONITORED.
   </footer>
 </body>
 </html>
