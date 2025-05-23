@@ -59,8 +59,8 @@
       padding: 0 1rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-gap: 2rem;
-      line-height: 1.4;
+      grid-gap: 3rem;
+      line-height: 1.5;
     }
     h1, h2 {
       font-weight: 700;
@@ -88,6 +88,15 @@
       color: #bbb;
       user-select: text;
     }
+    ul {
+      list-style: none;
+      padding-left: 1rem;
+    }
+    ul li::before {
+      content: "▹";
+      color: #00ffff;
+      margin-right: 0.5rem;
+    }
     footer {
       flex-shrink: 0;
       text-align: center;
@@ -104,7 +113,9 @@
     <div class="logo">.VLT</div>
     <div>
       <a href="#">Home</a>
-      <a href="#">About</a>
+      <a href="#">Mission</a>
+      <a href="#">Technology</a>
+      <a href="#">Security</a>
       <a href="#">Contact</a>
     </div>
   </nav>
@@ -128,6 +139,39 @@
         <li>Real-time covert analytics</li>
       </ul>
     </div>
+
+    <h2>Mission</h2>
+    <div>
+      <p>
+        To deliver unbreakable communication frameworks for operatives operating in contested urban landscapes.<br />
+        Maintain absolute data integrity and deny adversaries any foothold within secured channels.<br />
+        Our reach is silent, but our presence is felt — safeguarding the unseen.
+      </p>
+    </div>
+    <div></div>
+
+    <h2>Technology</h2>
+    <div>
+      <p>
+        Leveraging bio-mimetic signal vectors and dynamic pulse modulation to evade detection.<br />
+        Proprietary encryption layers render intercepted data indecipherable.<br />
+        Our relay units operate autonomously, adjusting flight patterns to maintain optimal network integrity.<br />
+        Integration of AI-driven analytics enhances signal routing and threat assessment.
+      </p>
+    </div>
+    <div></div>
+
+    <h2>Security Protocols</h2>
+    <div>
+      <ul>
+        <li>Multi-layer authentication for all network nodes</li>
+        <li>Continuous encryption key rotation</li>
+        <li>Fail-safe data purge on compromise detection</li>
+        <li>Signal masking and noise insertion to disrupt interception</li>
+        <li>Compartmentalized access for internal operations</li>
+      </ul>
+    </div>
+    <div></div>
   </main>
 
   <footer>
