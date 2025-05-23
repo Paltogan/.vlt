@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>.VLT — V.U.L.T.U.R.E.</title>
+  <title>.VLT — V.U.L.T.U.R.E. Surveillance Division</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
@@ -12,6 +12,7 @@
     :root {
       --primary-cyan: #00ffff;
       --secondary-cyan: #00cccc;
+      --warning-red: #ff3333;
       --dark-bg: #0a0a0a;
       --card-bg: #111111;
       --border-color: #222222;
@@ -19,6 +20,7 @@
       --text-secondary: #c5c7c6;
       --text-muted: #666666;
       --accent-glow: rgba(0, 255, 255, 0.3);
+      --surveillance-pulse: rgba(255, 51, 51, 0.2);
     }
 
     * {
@@ -41,7 +43,7 @@
       overflow-x: hidden;
     }
 
-    /* Animated background grid */
+    /* Enhanced animated background grid with surveillance scanlines */
     body::before {
       content: '';
       position: fixed;
@@ -50,10 +52,11 @@
       width: 100%;
       height: 100%;
       background-image: 
-        linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,255,255,0.1) 1px, transparent 1px);
-      background-size: 50px 50px;
-      animation: gridMove 20s linear infinite;
+        linear-gradient(rgba(0,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,51,51,0.03) 2px, transparent 2px);
+      background-size: 50px 50px, 50px 50px, 100% 200px;
+      animation: gridMove 20s linear infinite, scanlines 8s linear infinite;
       pointer-events: none;
       z-index: -1;
     }
@@ -63,9 +66,33 @@
       100% { transform: translate(50px, 50px); }
     }
 
+    @keyframes scanlines {
+      0% { background-position: 0 0, 0 0, 0 0; }
+      100% { background-position: 0 0, 0 0, 0 200px; }
+    }
+
+    /* Surveillance indicator */
+    .surveillance-indicator {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 12px;
+      height: 12px;
+      background: var(--warning-red);
+      border-radius: 50%;
+      z-index: 1000;
+      animation: surveillancePulse 2s ease-in-out infinite;
+      box-shadow: 0 0 10px var(--surveillance-pulse);
+    }
+
+    @keyframes surveillancePulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
     nav {
-      background: rgba(17, 17, 17, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(17, 17, 17, 0.98);
+      backdrop-filter: blur(15px);
       border-bottom: 1px solid var(--border-color);
       padding: 1rem 2rem;
       display: flex;
@@ -80,7 +107,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 20px rgba(0, 255, 255, 0.1);
+      box-shadow: 0 2px 20px rgba(0, 255, 255, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
     }
 
     nav .logo {
@@ -89,18 +116,33 @@
       color: var(--primary-cyan);
       font-size: 1.5rem;
       user-select: text;
-      text-shadow: 0 0 10px var(--accent-glow);
+      text-shadow: 0 0 15px var(--accent-glow);
       animation: logoGlow 3s ease-in-out infinite alternate;
+      position: relative;
+    }
+
+    nav .logo::after {
+      content: 'SURVEILLANCE DIVISION';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      font-size: 0.4rem;
+      color: var(--warning-red);
+      letter-spacing: 0.2em;
+      font-weight: 400;
+      opacity: 0.7;
+      white-space: nowrap;
     }
 
     @keyframes logoGlow {
-      0% { text-shadow: 0 0 10px var(--accent-glow); }
-      100% { text-shadow: 0 0 20px var(--accent-glow), 0 0 30px var(--accent-glow); }
+      0% { text-shadow: 0 0 15px var(--accent-glow); }
+      100% { text-shadow: 0 0 25px var(--accent-glow), 0 0 35px var(--accent-glow); }
     }
 
     nav .nav-links {
       display: flex;
       gap: 2rem;
+      align-items: center;
     }
 
     nav a {
@@ -111,12 +153,31 @@
       position: relative;
       padding: 0.5rem 1rem;
       border-radius: 4px;
+      border: 1px solid transparent;
     }
 
     nav a:hover {
       color: var(--primary-cyan);
       background: rgba(0, 255, 255, 0.1);
+      border-color: rgba(0, 255, 255, 0.3);
       transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+    }
+
+    .security-badge {
+      background: linear-gradient(45deg, var(--warning-red), #cc2222);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      animation: securityBlink 3s ease-in-out infinite;
+    }
+
+    @keyframes securityBlink {
+      0%, 90% { opacity: 1; }
+      95% { opacity: 0.3; }
     }
 
     main {
@@ -143,7 +204,20 @@
       user-select: text;
       text-align: center;
       position: relative;
-      text-shadow: 0 0 20px var(--accent-glow);
+      text-shadow: 0 0 25px var(--accent-glow);
+    }
+
+    h1::before {
+      content: '■ CLASSIFIED OPERATION ■';
+      position: absolute;
+      top: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.5rem;
+      color: var(--warning-red);
+      letter-spacing: 0.3em;
+      font-weight: 400;
+      opacity: 0.8;
     }
 
     h1::after {
@@ -153,13 +227,13 @@
       left: 0;
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
-      animation: underlineGlow 2s ease-in-out infinite alternate;
+      background: linear-gradient(90deg, transparent, var(--primary-cyan), var(--warning-red), var(--primary-cyan), transparent);
+      animation: underlineGlow 3s ease-in-out infinite alternate;
     }
 
     @keyframes underlineGlow {
-      0% { opacity: 0.5; }
-      100% { opacity: 1; }
+      0% { opacity: 0.6; }
+      100% { opacity: 1; box-shadow: 0 0 10px var(--accent-glow); }
     }
 
     section:first-of-type {
@@ -177,6 +251,19 @@
       margin-bottom: 2rem;
       color: var(--text-primary);
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .intro-text::before {
+      content: '[AUTHORIZED PERSONNEL ONLY]';
+      display: block;
+      color: var(--warning-red);
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.9;
     }
 
     .features-list {
@@ -190,29 +277,41 @@
       font-size: 1rem;
       color: var(--text-secondary);
       position: relative;
-      padding-left: 2rem;
+      padding-left: 2.5rem;
       transition: all 0.3s ease;
       cursor: default;
+      border-left: 2px solid transparent;
+      padding-left: 2rem;
+      margin-left: 0.5rem;
     }
 
     .features-list li::before {
-      content: "▶";
+      content: "●";
       color: var(--primary-cyan);
       position: absolute;
-      left: 0;
+      left: -1rem;
       top: 0;
-      font-size: 0.8rem;
+      font-size: 1rem;
       transition: all 0.3s ease;
+      animation: featurePulse 4s ease-in-out infinite;
+    }
+
+    @keyframes featurePulse {
+      0%, 100% { color: var(--primary-cyan); }
+      50% { color: var(--warning-red); }
     }
 
     .features-list li:hover {
       color: var(--text-primary);
       transform: translateX(10px);
+      border-left-color: var(--primary-cyan);
+      background: rgba(0, 255, 255, 0.05);
+      padding-left: 2rem;
     }
 
     .features-list li:hover::before {
-      color: var(--secondary-cyan);
-      transform: scale(1.2);
+      color: var(--warning-red);
+      transform: scale(1.3);
     }
 
     .stats-grid {
@@ -241,8 +340,8 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-      transition: left 0.6s ease;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), rgba(255, 51, 51, 0.05), transparent);
+      transition: left 0.8s ease;
     }
 
     .stat-card:hover::before {
@@ -252,7 +351,7 @@
     .stat-card:hover {
       transform: translateY(-5px);
       border-color: var(--primary-cyan);
-      box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2), 0 0 20px rgba(255, 51, 51, 0.1);
     }
 
     .stat-title {
@@ -263,6 +362,17 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       user-select: text;
+      position: relative;
+    }
+
+    .stat-title::after {
+      content: 'MONITORED';
+      position: absolute;
+      top: -0.8rem;
+      right: 0;
+      font-size: 0.4rem;
+      color: var(--warning-red);
+      opacity: 0.6;
     }
 
     .chart-container {
@@ -287,7 +397,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(45deg, rgba(0, 255, 255, 0.05), transparent);
+      background: linear-gradient(45deg, rgba(0, 255, 255, 0.03), rgba(255, 51, 51, 0.02), transparent);
       pointer-events: none;
     }
 
@@ -300,6 +410,19 @@
       text-align: center;
       text-transform: uppercase;
       letter-spacing: 0.15em;
+      position: relative;
+    }
+
+    .chart-title::before {
+      content: '[REAL-TIME SURVEILLANCE DATA]';
+      position: absolute;
+      top: -1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.4rem;
+      color: var(--warning-red);
+      font-weight: 400;
+      letter-spacing: 0.2em;
     }
 
     svg {
@@ -322,8 +445,8 @@
       stroke-width: 3;
       stroke-linejoin: round;
       stroke-linecap: round;
-      filter: drop-shadow(0 0 5px var(--accent-glow));
-      animation: drawLine 2s ease-out;
+      filter: drop-shadow(0 0 8px var(--accent-glow));
+      animation: drawLine 3s ease-out, dataPulse 6s ease-in-out infinite 3s;
     }
 
     @keyframes drawLine {
@@ -331,18 +454,24 @@
       100% { stroke-dasharray: 1000; stroke-dashoffset: 0; }
     }
 
+    @keyframes dataPulse {
+      0%, 100% { filter: drop-shadow(0 0 8px var(--accent-glow)); }
+      50% { filter: drop-shadow(0 0 15px var(--accent-glow)) drop-shadow(0 0 25px rgba(255, 51, 51, 0.3)); }
+    }
+
     .data-point {
       fill: var(--primary-cyan);
       stroke: var(--dark-bg);
       stroke-width: 2;
-      filter: drop-shadow(0 0 3px var(--accent-glow));
+      filter: drop-shadow(0 0 5px var(--accent-glow));
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .data-point:hover {
-      r: 6;
-      fill: var(--text-primary);
+      r: 7;
+      fill: var(--warning-red);
+      filter: drop-shadow(0 0 10px var(--surveillance-pulse));
     }
 
     .radial-bg {
@@ -357,7 +486,7 @@
       stroke-width: 12;
       stroke-linecap: round;
       transition: stroke-dashoffset 1s ease;
-      filter: drop-shadow(0 0 5px var(--accent-glow));
+      filter: drop-shadow(0 0 8px var(--accent-glow));
     }
 
     .radial-text {
@@ -366,20 +495,21 @@
       font-weight: 700;
       font-size: 1.4rem;
       user-select: text;
-      filter: drop-shadow(0 0 3px var(--accent-glow));
+      filter: drop-shadow(0 0 5px var(--accent-glow));
     }
 
     .bar {
       fill: var(--primary-cyan);
       transition: all 0.3s ease;
       cursor: pointer;
-      filter: drop-shadow(0 0 3px var(--accent-glow));
+      filter: drop-shadow(0 0 5px var(--accent-glow));
     }
 
     .bar:hover {
-      fill: var(--text-primary);
+      fill: var(--warning-red);
       transform: scaleY(1.1);
       transform-origin: bottom;
+      filter: drop-shadow(0 0 8px var(--surveillance-pulse));
     }
 
     .bar-bg {
@@ -394,8 +524,21 @@
       color: var(--text-muted);
       border-top: 1px solid var(--border-color);
       user-select: none;
-      background: rgba(17, 17, 17, 0.8);
-      backdrop-filter: blur(10px);
+      background: rgba(17, 17, 17, 0.95);
+      backdrop-filter: blur(15px);
+      position: relative;
+    }
+
+    footer::before {
+      content: 'CONFIDENTIAL - AUTHORIZED ACCESS ONLY - MONITORING IN PROGRESS';
+      position: absolute;
+      top: 0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      color: var(--warning-red);
+      letter-spacing: 0.1em;
+      opacity: 0.7;
     }
 
     /* Responsive design */
@@ -426,43 +569,79 @@
       .chart-container {
         padding-left: 0;
       }
+
+      .surveillance-indicator {
+        top: 10px;
+        right: 10px;
+      }
     }
 
     /* Loading animation */
     .loading {
       opacity: 0;
-      animation: fadeIn 1s ease-out forwards;
+      animation: fadeIn 1.5s ease-out forwards;
     }
 
     @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
+      0% { opacity: 0; transform: translateY(30px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* Glitch effect for dramatic moments */
+    /* Enhanced glitch effect */
     .glitch {
-      animation: glitch 0.3s ease-in-out infinite alternate;
+      animation: glitch 0.5s ease-in-out infinite alternate;
     }
 
     @keyframes glitch {
-      0% { transform: translate(0); }
-      20% { transform: translate(-2px, 2px); }
-      40% { transform: translate(-2px, -2px); }
-      60% { transform: translate(2px, 2px); }
-      80% { transform: translate(2px, -2px); }
-      100% { transform: translate(0); }
+      0% { transform: translate(0); filter: hue-rotate(0deg); }
+      10% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); }
+      20% { transform: translate(-2px, -2px); filter: hue-rotate(180deg); }
+      30% { transform: translate(2px, 2px); filter: hue-rotate(270deg); }
+      40% { transform: translate(2px, -2px); filter: hue-rotate(360deg); }
+      50% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); }
+      60% { transform: translate(-2px, -2px); filter: hue-rotate(180deg); }
+      70% { transform: translate(2px, 2px); filter: hue-rotate(270deg); }
+      80% { transform: translate(2px, -2px); filter: hue-rotate(360deg); }
+      90% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); }
+      100% { transform: translate(0); filter: hue-rotate(0deg); }
+    }
+
+    /* Surveillance warning overlay */
+    .surveillance-warning {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255, 51, 51, 0.1);
+      border: 1px solid var(--warning-red);
+      border-radius: 6px;
+      padding: 0.8rem 1.2rem;
+      font-size: 0.7rem;
+      color: var(--warning-red);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      z-index: 999;
+      animation: warningFade 8s ease-in-out infinite;
+    }
+
+    @keyframes warningFade {
+      0%, 70% { opacity: 0; transform: translateY(20px); }
+      80%, 95% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-20px); }
     }
   </style>
 </head>
 <body>
+  <div class="surveillance-indicator"></div>
+  <div class="surveillance-warning">ALL ACTIVITY MONITORED & RECORDED</div>
+
   <nav class="loading">
     <div class="logo">.VLT</div>
     <div class="nav-links">
-      <a href="#" onclick="triggerGlitch()">Home</a>
-      <a href="#" onclick="triggerGlitch()">Mission</a>
-      <a href="#" onclick="triggerGlitch()">Technology</a>
-      <a href="#" onclick="triggerGlitch()">Security</a>
-      <a href="#" onclick="triggerGlitch()">Contact</a>
+      <a href="#" onclick="triggerGlitch()">Operations</a>
+      <a href="#" onclick="triggerGlitch()">Intelligence</a>
+      <a href="#" onclick="triggerGlitch()">Surveillance</a>
+      <a href="#" onclick="triggerGlitch()">Control</a>
+      <div class="security-badge">LEVEL 5</div>
     </div>
   </nav>
 
@@ -471,21 +650,21 @@
 
     <section class="loading">
       <div class="intro-text">
-        V.U.L.T.U.R.E. delivers cutting-edge communication technology optimized for security, speed, and reliability. Our systems are engineered for covert operations and large-scale data networks with military-grade encryption and quantum-resistant protocols.
+        V.U.L.T.U.R.E. provides comprehensive population monitoring and behavioral analysis through advanced neural network integration. Our quantum-encrypted surveillance matrix ensures complete citizen compliance while maintaining the illusion of privacy and freedom.
       </div>
       
       <ul class="features-list">
-        <li>Encrypted transmission protocols with AES-256</li>
-        <li>Adaptive signal optimization and frequency hopping</li>
-        <li>Network uptime exceeding 99.9% with redundant systems</li>
-        <li>Advanced relay node monitoring and auto-failover</li>
-        <li>Zero-knowledge architecture for maximum privacy</li>
-        <li>Quantum-resistant cryptographic implementation</li>
+        <li>Neural pattern recognition with 99.7% accuracy prediction</li>
+        <li>Biometric tracking across all registered citizen databases</li>
+        <li>Real-time behavioral anomaly detection and reporting</li>
+        <li>Predictive crime prevention through social credit scoring</li>
+        <li>Memory modification protocols for dissenting individuals</li>
+        <li>Seamless integration with municipal happiness optimization</li>
       </ul>
 
       <div class="stats-grid">
         <div class="stat-card" onclick="animateUptime()">
-          <div class="stat-title">Network Uptime</div>
+          <div class="stat-title">Citizen Compliance</div>
           <svg viewBox="0 0 120 120" role="img" width="80" height="80">
             <circle class="radial-bg" cx="60" cy="60" r="45" />
             <circle
@@ -493,15 +672,15 @@
               class="radial-fg"
               cx="60" cy="60" r="45"
               stroke-dasharray="283"
-              stroke-dashoffset="37"
+              stroke-dashoffset="25"
               transform="rotate(-90 60 60)"
             />
-            <text x="60" y="68" text-anchor="middle" class="radial-text" id="uptimeText">87%</text>
+            <text x="60" y="68" text-anchor="middle" class="radial-text" id="uptimeText">91%</text>
           </svg>
         </div>
 
         <div class="stat-card">
-          <div class="stat-title">Relay Nodes</div>
+          <div class="stat-title">Surveillance Nodes</div>
           <svg viewBox="0 0 200 100" role="img" width="100%" height="60">
             <rect class="bar-bg" x="20" y="20" width="15" height="60" rx="3" ry="3" />
             <rect class="bar-bg" x="50" y="20" width="15" height="60" rx="3" ry="3" />
@@ -510,19 +689,19 @@
             <rect class="bar-bg" x="140" y="20" width="15" height="60" rx="3" ry="3" />
             <rect class="bar-bg" x="170" y="20" width="15" height="60" rx="3" ry="3" />
 
-            <rect class="bar" x="20" y="50" width="15" height="30" rx="3" ry="3" />
-            <rect class="bar" x="50" y="35" width="15" height="45" rx="3" ry="3" />
-            <rect class="bar" x="80" y="60" width="15" height="20" rx="3" ry="3" />
-            <rect class="bar" x="110" y="25" width="15" height="55" rx="3" ry="3" />
-            <rect class="bar" x="140" y="40" width="15" height="40" rx="3" ry="3" />
-            <rect class="bar" x="170" y="30" width="15" height="50" rx="3" ry="3" />
+            <rect class="bar" x="20" y="25" width="15" height="55" rx="3" ry="3" />
+            <rect class="bar" x="50" y="20" width="15" height="60" rx="3" ry="3" />
+            <rect class="bar" x="80" y="30" width="15" height="50" rx="3" ry="3" />
+            <rect class="bar" x="110" y="22" width="15" height="58" rx="3" ry="3" />
+            <rect class="bar" x="140" y="25" width="15" height="55" rx="3" ry="3" />
+            <rect class="bar" x="170" y="20" width="15" height="60" rx="3" ry="3" />
 
-            <text x="27" y="95" class="axis-label" text-anchor="middle">N1</text>
-            <text x="57" y="95" class="axis-label" text-anchor="middle">N2</text>
-            <text x="87" y="95" class="axis-label" text-anchor="middle">N3</text>
-            <text x="117" y="95" class="axis-label" text-anchor="middle">N4</text>
-            <text x="147" y="95" class="axis-label" text-anchor="middle">N5</text>
-            <text x="177" y="95" class="axis-label" text-anchor="middle">N6</text>
+            <text x="27" y="95" class="axis-label" text-anchor="middle">S1</text>
+            <text x="57" y="95" class="axis-label" text-anchor="middle">S2</text>
+            <text x="87" y="95" class="axis-label" text-anchor="middle">S3</text>
+            <text x="117" y="95" class="axis-label" text-anchor="middle">S4</text>
+            <text x="147" y="95" class="axis-label" text-anchor="middle">S5</text>
+            <text x="177" y="95" class="axis-label" text-anchor="middle">S6</text>
           </svg>
         </div>
       </div>
@@ -530,12 +709,12 @@
 
     <section class="chart-container loading">
       <div class="main-chart">
-        <div class="chart-title">Signal Optimization Matrix</div>
-        <svg viewBox="0 0 450 200" aria-label="Signal Optimization Over Time" role="img">
+        <div class="chart-title">Behavioral Prediction Analytics</div>
+        <svg viewBox="0 0 450 200" aria-label="Behavioral Analysis Over Time" role="img">
           <!-- Grid lines -->
           <defs>
             <pattern id="grid" width="40" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 20" fill="none" stroke="#333" stroke-width="0.5" opacity="0.3"/>
+              <path d="M 40 0 L 0 0 0 20" fill="none" stroke="#333" stroke-width="0.5" opacity="0.4"/>
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
@@ -545,13 +724,13 @@
           <line x1="40" y1="30" x2="40" y2="160" stroke="#666" stroke-width="2" />
           
           <!-- Time labels -->
-          <text x="70" y="180" class="axis-label" text-anchor="middle">T1</text>
-          <text x="120" y="180" class="axis-label" text-anchor="middle">T2</text>
-          <text x="170" y="180" class="axis-label" text-anchor="middle">T3</text>
-          <text x="220" y="180" class="axis-label" text-anchor="middle">T4</text>
-          <text x="270" y="180" class="axis-label" text-anchor="middle">T5</text>
-          <text x="320" y="180" class="axis-label" text-anchor="middle">T6</text>
-          <text x="370" y="180" class="axis-label" text-anchor="middle">T7</text>
+          <text x="70" y="180" class="axis-label" text-anchor="middle">06:00</text>
+          <text x="120" y="180" class="axis-label" text-anchor="middle">09:00</text>
+          <text x="170" y="180" class="axis-label" text-anchor="middle">12:00</text>
+          <text x="220" y="180" class="axis-label" text-anchor="middle">15:00</text>
+          <text x="270" y="180" class="axis-label" text-anchor="middle">18:00</text>
+          <text x="320" y="180" class="axis-label" text-anchor="middle">21:00</text>
+          <text x="370" y="180" class="axis-label" text-anchor="middle">00:00</text>
           
           <!-- Value labels -->
           <text x="30" y="165" class="axis-label" text-anchor="end">0</text>
@@ -561,115 +740,8 @@
           <text x="30" y="35" class="axis-label" text-anchor="end">100</text>
           
           <!-- Data line -->
-          <path id="mainLine" class="line-path" d="M70 145 L120 125 L170 110 L220 95 L270 75 L320 55 L370 40" />
+          <path id="mainLine" class="line-path" d="M70 130 L120 110 L170 95 L220 85 L270 70 L320 60 L370 45" />
           
           <!-- Data points -->
-          <circle class="data-point" cx="70" cy="145" r="4" onclick="showDataPoint(15)" />
-          <circle class="data-point" cx="120" cy="125" r="4" onclick="showDataPoint(32)" />
-          <circle class="data-point" cx="170" cy="110" r="4" onclick="showDataPoint(48)" />
-          <circle class="data-point" cx="220" cy="95" r="4" onclick="showDataPoint(61)" />
-          <circle class="data-point" cx="270" cy="75" r="4" onclick="showDataPoint(78)" />
-          <circle class="data-point" cx="320" cy="55" r="4" onclick="showDataPoint(89)" />
-          <circle class="data-point" cx="370" cy="40" r="4" onclick="showDataPoint(96)" />
-        </svg>
-      </div>
-    </section>
-  </main>
-
-  <footer class="loading">
-    <div>&copy; 2025 .VLT — All rights reserved | Classified Technology Division</div>
-  </footer>
-
-  <script>
-    // Initialize loading animations
-    document.addEventListener('DOMContentLoaded', function() {
-      const loadingElements = document.querySelectorAll('.loading');
-      loadingElements.forEach((el, index) => {
-        setTimeout(() => {
-          el.style.animationDelay = (index * 0.2) + 's';
-        }, index * 100);
-      });
-    });
-
-    // Glitch effect for navigation
-    function triggerGlitch() {
-      const logo = document.querySelector('.logo');
-      logo.classList.add('glitch');
-      setTimeout(() => {
-        logo.classList.remove('glitch');
-      }, 600);
-    }
-
-    // Interactive uptime animation
-    function animateUptime() {
-      const circle = document.getElementById('uptimeCircle');
-      const text = document.getElementById('uptimeText');
-      const values = [87, 92, 95, 99];
-      const offsets = [37, 23, 14, 3];
-      let index = 0;
-      
-      const interval = setInterval(() => {
-        circle.style.strokeDashoffset = offsets[index];
-        text.textContent = values[index] + '%';
-        index++;
-        
-        if (index >= values.length) {
-          clearInterval(interval);
-          setTimeout(() => {
-            circle.style.strokeDashoffset = '37';
-            text.textContent = '87%';
-          }, 2000);
-        }
-      }, 800);
-    }
-
-    // Interactive data points
-    function showDataPoint(value) {
-      const notification = document.createElement('div');
-      notification.textContent = `Optimization Level: ${value}%`;
-      notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(145deg, #111, #0f0f0f);
-        color: #00ffff;
-        padding: 1rem 2rem;
-        border-radius: 8px;
-        border: 1px solid #00ffff;
-        font-family: 'IBM Plex Mono', monospace;
-        font-weight: 700;
-        z-index: 1000;
-        animation: slideIn 0.3s ease-out;
-      `;
-      
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.remove();
-      }, 2000);
-    }
-
-    // Add dynamic styles for notifications
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes slideIn {
-        0% { transform: translateX(100%); opacity: 0; }
-        100% { transform: translateX(0); opacity: 1; }
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Periodic subtle animations
-    setInterval(() => {
-      const bars = document.querySelectorAll('.bar');
-      bars.forEach(bar => {
-        const currentHeight = parseInt(bar.getAttribute('height'));
-        const variation = Math.random() * 10 - 5;
-        const newHeight = Math.max(10, currentHeight + variation);
-        bar.setAttribute('height', newHeight);
-        bar.setAttribute('y', 80 - newHeight);
-      });
-    }, 3000);
-  </script>
-</body>
-</html>
+          <circle class="data-point" cx="70" cy="130" r="4" onclick="showDataPoint('MORNING COMPLIANCE: 68%')" />
+          <circle class="data-point" cx="120" cy="110" r="4" onclick="showDataPoint('WORK PRODUCTIVITY:
