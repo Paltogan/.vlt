@@ -1,165 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>NEXATHER SYSTEMS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>.VLT — Advanced Communication Systems</title>
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="vulture_cyan.svg" />
+  <link rel="alternate icon" type="image/png" href="vulture_cyan.png" sizes="32x32" />
+  <link rel="shortcut icon" href="vulture_cyan.ico" />
+
+  <!-- Styles -->
   <style>
-    /* Reset & base */
-    * {
-      box-sizing: border-box;
-    }
     html, body {
-      margin: 0; padding: 0;
-      height: 100%;
-      background: #0a0a0a;
+      margin: 0; padding: 0; height: 100%;
+      background-color: #0a0a0a;
       color: #c5c7c6;
       font-family: 'IBM Plex Mono', monospace;
-      display: flex;
-      flex-direction: column;
       letter-spacing: 0.05em;
       font-weight: 400;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
     }
-    body > nav, footer {
-      flex-shrink: 0;
+    nav {
+      background: #111;
+      border-bottom: 1px solid #222;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.875rem;
+      color: #666;
+    }
+    nav .logo {
+      font-weight: 700;
+      color: #00ffff;
+      user-select: text;
+    }
+    nav a {
+      color: #666;
+      text-decoration: none;
+      margin-left: 2rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #00ffff;
     }
     main {
       flex: 1 0 auto;
       max-width: 900px;
-      margin: 2rem auto;
+      margin: 3rem auto;
       padding: 0 1rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-gap: 2rem;
       line-height: 1.4;
     }
-    nav {
-      background: #111;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #222;
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    nav .logo {
-      color: #66ffcc;
-      font-weight: 700;
-      font-size: 1.25rem;
-      user-select: none;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-      margin: 0; padding: 0;
-    }
-    nav a {
-      color: #666;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-    nav a:hover {
-      color: #66ffcc;
-    }
     h1, h2 {
       font-weight: 700;
+      color: #00ffff;
       text-transform: uppercase;
-      color: #66ffcc;
-      margin: 0 0 1rem 0;
       letter-spacing: 0.15em;
+      margin: 0 0 1rem 0;
+      user-select: text;
     }
     h1 {
       grid-column: 1 / -1;
       font-size: 2.5rem;
       border-bottom: 1px solid #222;
       padding-bottom: 0.5rem;
-      user-select: none;
-      animation: blink 2s infinite;
+      animation: blink 2.5s infinite alternate;
     }
     @keyframes blink {
-      0%, 100% { opacity: 1; }
+      0% { opacity: 1; }
       50% { opacity: 0.5; }
+      100% { opacity: 1; }
     }
     p, ul {
       margin: 0;
-      color: #bbb;
       font-size: 0.9rem;
+      color: #bbb;
       user-select: text;
-    }
-    ul {
-      padding-left: 1.25rem;
-      list-style-type: none;
-    }
-    ul li {
-      position: relative;
-      padding-left: 1rem;
-      margin-bottom: 0.5rem;
-    }
-    ul li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      color: #66ffcc;
-      font-weight: 700;
-    }
-    footer {
-      background: #111;
-      color: #444;
-      padding: 1rem 2rem;
-      font-size: 0.75rem;
-      text-align: center;
-      letter-spacing: 0.1em;
-      border-top: 1px solid #222;
-      user-select: none;
-    }
-    /* Hide "Access" nav item but keep space for potential */
-    nav ul li.hidden {
-      display: none;
     }
   </style>
 </head>
-<body>
-  <nav>
-    <div class="logo">NEXATHER</div>
-    <ul>
-      <li><a href="index.html">HOME</a></li>
-      <li><a href="about.html">ABOUT</a></li>
-      <li><a href="services.html">SOLUTIONS</a></li>
-      <li class="hidden"><a href="internal.html">ACCESS</a></li>
-    </ul>
-  </nav>
-
-  <main>
-    <h1>URBAN STABILITY THROUGH DATA</h1>
-
-    <section>
-      <h2>OUR MISSION</h2>
-      <p>
-        NEXATHER SYSTEMS operates as a behavioral and infrastructural integration partner, delivering real-time data analytics and compliance enforcement across metropolitan environments.
-      </p>
-      <p>
-        Our systems enable preemptive situational foresight, risk scoring, and behavioral modulation to ensure order and efficiency within Tier 1 jurisdictions.
-      </p>
-    </section>
-
-    <section>
-      <h2>CORE SYSTEMS</h2>
-      <ul>
-        <li>SIGNAL-TIER ENTITY PROFILING (SEP)</li>
-        <li>LONG-PATTERN ROUTING NODES (LPRN)</li>
-        <li>CROSS-ZONE COMPLIANCE MONITORING (CZCM)</li>
-        <li>BIOMETRIC PREDICTIVE FORECAST ENGINE (BPFE)</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer>
-    © 2045 NEXATHER HOLDINGS. OPERATIONAL CERTIFICATE #REDACTED. ALL SYSTEMS MONITORED.
-  </footer>
-</body>
-</html>
