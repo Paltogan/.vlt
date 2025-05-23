@@ -24,6 +24,7 @@
       display: flex;
       flex-direction: column;
       user-select: none;
+      min-width: 320px;
     }
     nav {
       background: #111;
@@ -36,6 +37,7 @@
       letter-spacing: 0.1em;
       font-size: 0.875rem;
       color: #666;
+      user-select: none;
     }
     nav .logo {
       font-weight: 700;
@@ -54,9 +56,10 @@
     }
     main {
       flex: 1 0 auto;
-      max-width: 900px;
+      width: 100vw;
+      max-width: 1200px;
       margin: 3rem auto;
-      padding: 0 1rem;
+      padding: 0 2rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-gap: 3rem;
@@ -83,19 +86,20 @@
       100% { opacity: 1; }
     }
     p, ul {
-      margin: 0;
-      font-size: 0.9rem;
+      margin: 0 0 1.5rem 0;
+      font-size: 0.95rem;
       color: #bbb;
       user-select: text;
+      max-width: 550px;
     }
     ul {
       list-style: none;
-      padding-left: 1rem;
+      padding-left: 1.2rem;
     }
     ul li::before {
       content: "▹";
       color: #00ffff;
-      margin-right: 0.5rem;
+      margin-right: 0.6rem;
     }
     footer {
       flex-shrink: 0;
@@ -106,14 +110,11 @@
       border-top: 1px solid #222;
       user-select: none;
     }
-
-    /* Visual containers */
     .visual-group {
       display: flex;
       flex-direction: column;
       gap: 3rem;
     }
-
     .visual-box {
       background: #111;
       border: 1px solid #222;
@@ -122,7 +123,6 @@
       user-select: none;
       text-align: center;
     }
-
     .visual-title {
       color: #00ffff;
       font-weight: 700;
@@ -132,8 +132,6 @@
       text-transform: uppercase;
       user-select: text;
     }
-
-    /* Chart styles */
     svg {
       width: 100%;
       height: auto;
@@ -158,8 +156,6 @@
       stroke: #0a0a0a;
       stroke-width: 1;
     }
-
-    /* Radial progress */
     .radial-bg {
       fill: none;
       stroke: #222;
@@ -179,8 +175,6 @@
       font-size: 1.5rem;
       user-select: text;
     }
-
-    /* Bar chart */
     .bar {
       fill: #00ffff;
     }
@@ -204,72 +198,78 @@
   <main>
     <h1>V.U.L.T.U.R.E.</h1>
 
-    <!-- Left column with visuals -->
-    <div class="visual-group">
-      <!-- Radial progress: Network Uptime -->
-      <section class="visual-box" aria-label="Network uptime">
-        <div class="visual-title">Network Uptime</div>
-        <svg viewBox="0 0 120 120" role="img" aria-labelledby="uptimeTitle uptimeDesc" width="100" height="100" >
-          <title id="uptimeTitle">Network Uptime</title>
-          <desc id="uptimeDesc">Circle showing 87 percent uptime</desc>
-          <circle class="radial-bg" cx="60" cy="60" r="50" />
-          <circle
-            class="radial-fg"
-            cx="60" cy="60" r="50"
-            stroke-dasharray="314"
-            stroke-dashoffset="40"
-            transform="rotate(-90 60 60)"
-          />
-          <text x="60" y="68" text-anchor="middle" class="radial-text">87%</text>
-        </svg>
-      </section>
+    <!-- Left column: Text + visuals -->
+    <section>
+      <p>
+        V.U.L.T.U.R.E. delivers cutting-edge communication technology optimized for security, speed, and reliability. Our systems are engineered for covert operations and large-scale data networks.
+      </p>
+      <ul>
+        <li>Encrypted transmission protocols</li>
+        <li>Adaptive signal optimization</li>
+        <li>Network uptime exceeding 99.9%</li>
+        <li>Advanced relay node monitoring</li>
+      </ul>
 
-      <!-- Bar chart: Relay Node Activity -->
-      <section class="visual-box" aria-label="Relay node activity">
-        <div class="visual-title">Relay Node Activity</div>
-        <svg viewBox="0 0 200 120" role="img" aria-labelledby="relayTitle relayDesc" width="100%" height="100" >
-          <title id="relayTitle">Relay Node Activity</title>
-          <desc id="relayDesc">Bar chart showing activity levels of relay nodes</desc>
+      <div class="visual-group">
+        <section class="visual-box" aria-label="Network uptime">
+          <div class="visual-title">Network Uptime</div>
+          <svg viewBox="0 0 120 120" role="img" aria-labelledby="uptimeTitle uptimeDesc" width="100" height="100" >
+            <title id="uptimeTitle">Network Uptime</title>
+            <desc id="uptimeDesc">Circle showing 87 percent uptime</desc>
+            <circle class="radial-bg" cx="60" cy="60" r="50" />
+            <circle
+              class="radial-fg"
+              cx="60" cy="60" r="50"
+              stroke-dasharray="314"
+              stroke-dashoffset="40"
+              transform="rotate(-90 60 60)"
+            />
+            <text x="60" y="68" text-anchor="middle" class="radial-text">87%</text>
+          </svg>
+        </section>
 
-          <!-- Background bars -->
-          <rect class="bar-bg" x="20" y="20" width="20" height="80" rx="3" ry="3" />
-          <rect class="bar-bg" x="60" y="20" width="20" height="80" rx="3" ry="3" />
-          <rect class="bar-bg" x="100" y="20" width="20" height="80" rx="3" ry="3" />
-          <rect class="bar-bg" x="140" y="20" width="20" height="80" rx="3" ry="3" />
+        <section class="visual-box" aria-label="Relay node activity">
+          <div class="visual-title">Relay Node Activity</div>
+          <svg viewBox="0 0 200 120" role="img" aria-labelledby="relayTitle relayDesc" width="100%" height="100" >
+            <title id="relayTitle">Relay Node Activity</title>
+            <desc id="relayDesc">Bar chart showing activity levels of relay nodes</desc>
 
-          <!-- Active bars -->
-          <rect class="bar" x="20" y="55" width="20" height="45" rx="3" ry="3" />
-          <rect class="bar" x="60" y="40" width="20" height="60" rx="3" ry="3" />
-          <rect class="bar" x="100" y="65" width="20" height="35" rx="3" ry="3" />
-          <rect class="bar" x="140" y="30" width="20" height="70" rx="3" ry="3" />
+            <!-- Background bars -->
+            <rect class="bar-bg" x="20" y="20" width="20" height="80" rx="3" ry="3" />
+            <rect class="bar-bg" x="60" y="20" width="20" height="80" rx="3" ry="3" />
+            <rect class="bar-bg" x="100" y="20" width="20" height="80" rx="3" ry="3" />
+            <rect class="bar-bg" x="140" y="20" width="20" height="80" rx="3" ry="3" />
 
-          <!-- Labels -->
-          <text x="30" y="115" class="axis-label" text-anchor="middle">A</text>
-          <text x="70" y="115" class="axis-label" text-anchor="middle">B</text>
-          <text x="110" y="115" class="axis-label" text-anchor="middle">C</text>
-          <text x="150" y="115" class="axis-label" text-anchor="middle">D</text>
-        </svg>
-      </section>
-    </div>
+            <!-- Active bars -->
+            <rect class="bar" x="20" y="55" width="20" height="45" rx="3" ry="3" />
+            <rect class="bar" x="60" y="40" width="20" height="60" rx="3" ry="3" />
+            <rect class="bar" x="100" y="70" width="20" height="30" rx="3" ry="3" />
+            <rect class="bar" x="140" y="35" width="20" height="65" rx="3" ry="3" />
 
-    <!-- Right column with line chart -->
-    <section class="visual-box" aria-label="Signal Optimization Over Time">
-      <div class="visual-title">Signal Optimization Over Time</div>
-      <svg viewBox="0 0 400 150" role="img" aria-labelledby="title desc" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" >
-        <title id="title">Line chart showing signal optimization over time</title>
-        <desc id="desc">The line steadily increases from left to right with minor fluctuations.</desc>
+            <!-- Labels -->
+            <text x="30" y="115" class="axis-label" text-anchor="middle">Node 1</text>
+            <text x="70" y="115" class="axis-label" text-anchor="middle">Node 2</text>
+            <text x="110" y="115" class="axis-label" text-anchor="middle">Node 3</text>
+            <text x="150" y="115" class="axis-label" text-anchor="middle">Node 4</text>
+          </svg>
+        </section>
+      </div>
+    </section>
 
-        <!-- X-axis -->
-        <line x1="40" y1="130" x2="380" y2="130" stroke="#444" stroke-width="1"/>
-        <!-- Y-axis -->
-        <line x1="40" y1="130" x2="40" y2="20" stroke="#444" stroke-width="1"/>
+    <!-- Right column: Graph -->
+    <section>
+      <svg viewBox="0 0 420 160" aria-label="Signal Optimization Over Time" role="img" style="width: 100%; height: auto;">
+        <!-- X-axis line -->
+        <line x1="30" y1="130" x2="400" y2="130" stroke="#666" stroke-width="1" />
+        <!-- Y-axis line -->
+        <line x1="30" y1="20" x2="30" y2="130" stroke="#666" stroke-width="1" />
 
         <!-- X-axis labels -->
         <text x="40" y="145" class="axis-label" text-anchor="middle">T1</text>
-        <text x="110" y="145" class="axis-label" text-anchor="middle">T2</text>
-        <text x="180" y="145" class="axis-label" text-anchor="middle">T3</text>
-        <text x="250" y="145" class="axis-label" text-anchor="middle">T4</text>
-        <text x="320" y="145" class="axis-label" text-anchor="middle">T5</text>
+        <text x="90" y="145" class="axis-label" text-anchor="middle">T2</text>
+        <text x="140" y="145" class="axis-label" text-anchor="middle">T3</text>
+        <text x="190" y="145" class="axis-label" text-anchor="middle">T4</text>
+        <text x="240" y="145" class="axis-label" text-anchor="middle">T5</text>
 
         <!-- Y-axis labels -->
         <text x="25" y="130" class="axis-label" text-anchor="end">0</text>
