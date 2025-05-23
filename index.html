@@ -1,34 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nexather Analytics</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #0a0a0a;
-      color: #d0d0d0;
-      padding: 2em;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0e0e0e;
+      color: #e0e0e0;
     }
-    a { color: #49b0ff; text-decoration: none; }
-    .container { max-width: 700px; margin: auto; }
-    .glitch { font-style: italic; opacity: 0.5; }
+
+    header {
+      background-color: #111;
+      padding: 1.5em 2em;
+      border-bottom: 2px solid #222;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+      color: #00aaff;
+    }
+
+    nav {
+      margin-top: 0.5em;
+    }
+
+    nav a {
+      margin-right: 2em;
+      text-decoration: none;
+      color: #ccc;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #00aaff;
+    }
+
+    main {
+      padding: 3em 2em;
+      max-width: 960px;
+      margin: auto;
+    }
+
+    .tagline {
+      font-size: 1.5em;
+      margin-bottom: 0.5em;
+      color: #66ccff;
+    }
+
+    .section {
+      margin-top: 2em;
+    }
+
+    .section h2 {
+      color: #00aaff;
+      border-bottom: 1px solid #222;
+      padding-bottom: 0.3em;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2em;
+      font-size: 0.9em;
+      color: #777;
+      border-top: 1px solid #222;
+      margin-top: 3em;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+  <header>
     <h1>Nexather Analytics</h1>
-    <p>Urban telemetry. Behavioral infrastructure. Predictive oversight.<br>
-       Serving Zone 4 & Greater 12th District since 2041.</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="systems.html">Systems</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-    <h2>Services</h2>
-    <ul>
-      <li>Environmental Motion Pattern Analysis</li>
-      <li>Vertical Migration Forecasting</li>
-      <li>Non-invasive Behavioral Observation</li>
-    </ul>
+  <main>
+    <p class="tagline">Urban Intelligence. Behavioral Oversight. Predictive Efficiency.</p>
 
-    <h2><a href="systems.html">System Archive</a></h2>
-    <p class="glitch">_access permitted: tier λ_</p>
-  </div>
+    <section class="section">
+      <h2>About Us</h2>
+      <p>
+        Nexather Analytics provides scalable surveillance telemetry and predictive population behavior systems to key metropolitan clients. We specialize in high-fidelity motion capture analysis, airborne signal networks, and proactive civic modeling. 
+      </p>
+      <p>
+        Our mission is clear: enable control, optimize outcomes, and ensure cohesion across all urban zones.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Core Services</h2>
+      <ul>
+        <li>Zone-wide Predictive Tracking</li>
+        <li>Non-intrusive Biometric Collection</li>
+        <li>Autonomous Signal Routing (ASR)</li>
+        <li>Pattern-Based Threat Identification</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    © 2045 Nexather Group. All Rights Reserved. | Tier 1 Governmental License Active
+  </footer>
 </body>
 </html>
