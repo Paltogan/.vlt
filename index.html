@@ -122,7 +122,7 @@
     }
 
     nav .logo::after {
-      content: 'SURVEILLANCE DIVISION';
+      content: 'HOME';
       position: absolute;
       top: 100%;
       left: 0;
@@ -162,17 +162,6 @@
       border-color: rgba(0, 255, 255, 0.3);
       transform: translateY(-2px);
       box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
-    }
-
-    .security-badge {
-      background: linear-gradient(45deg, var(--warning-red), #cc2222);
-      color: white;
-      padding: 0.3rem 0.8rem;
-      border-radius: 12px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      animation: securityBlink 3s ease-in-out infinite;
     }
 
     @keyframes securityBlink {
@@ -620,7 +609,6 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       z-index: 999;
-      animation: warningFade 8s ease-in-out infinite;
     }
 
     @keyframes warningFade {
@@ -637,7 +625,7 @@
   <nav class="loading">
     <div class="logo">.VLT</div>
     <div class="nav-links">
-      <a href="#" onclick="triggerGlitch()">Operations</a>
+      <a href="https://paltogan.github.io/.vlt/operations.html" target="_blank">Operations</a>
       <a href="#" onclick="triggerGlitch()">Intelligence</a>
       <a href="#" onclick="triggerGlitch()">Surveillance</a>
       <a href="#" onclick="triggerGlitch()">Control</a>
