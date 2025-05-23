@@ -106,6 +106,45 @@
       border-top: 1px solid #222;
       user-select: none;
     }
+    /* Graph container */
+    .graph-container {
+      grid-column: 1 / -1;
+      background: #111;
+      border: 1px solid #222;
+      padding: 1rem;
+      border-radius: 4px;
+      user-select: none;
+    }
+    .graph-title {
+      color: #00ffff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      user-select: text;
+    }
+    /* Axis labels */
+    .axis-label {
+      fill: #666;
+      font-size: 0.75rem;
+      font-family: 'IBM Plex Mono', monospace;
+      user-select: none;
+    }
+    /* Line style */
+    .line-path {
+      fill: none;
+      stroke: #00ffff;
+      stroke-width: 2;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+    /* Points */
+    .data-point {
+      fill: #00ffff;
+      stroke: #0a0a0a;
+      stroke-width: 1;
+    }
   </style>
 </head>
 <body>
@@ -139,6 +178,47 @@
         <li>Real-time covert analytics</li>
       </ul>
     </div>
+
+    <section class="graph-container" aria-label="Signal Optimization Over Time">
+      <div class="graph-title">Signal Optimization Over Time</div>
+      <svg viewBox="0 0 400 150" role="img" aria-labelledby="title desc" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" >
+        <title id="title">Line chart showing signal optimization over time</title>
+        <desc id="desc">The line steadily increases from left to right with minor fluctuations.</desc>
+
+        <!-- X-axis -->
+        <line x1="40" y1="130" x2="380" y2="130" stroke="#444" stroke-width="1"/>
+        <!-- Y-axis -->
+        <line x1="40" y1="130" x2="40" y2="20" stroke="#444" stroke-width="1"/>
+
+        <!-- X-axis labels -->
+        <text x="40" y="145" class="axis-label" text-anchor="middle">T1</text>
+        <text x="110" y="145" class="axis-label" text-anchor="middle">T2</text>
+        <text x="180" y="145" class="axis-label" text-anchor="middle">T3</text>
+        <text x="250" y="145" class="axis-label" text-anchor="middle">T4</text>
+        <text x="320" y="145" class="axis-label" text-anchor="middle">T5</text>
+        <text x="380" y="145" class="axis-label" text-anchor="middle">T6</text>
+
+        <!-- Y-axis labels -->
+        <text x="25" y="130" class="axis-label" text-anchor="end">0%</text>
+        <text x="25" y="100" class="axis-label" text-anchor="end">25%</text>
+        <text x="25" y="70" class="axis-label" text-anchor="end">50%</text>
+        <text x="25" y="40" class="axis-label" text-anchor="end">75%</text>
+        <text x="25" y="20" class="axis-label" text-anchor="end">100%</text>
+
+        <!-- Line Path -->
+        <path class="line-path" d="M40,120 L90,110 L140,85 L190,80 L240,50 L290,40 L340,30 L380,20" />
+
+        <!-- Data Points -->
+        <circle class="data-point" cx="40" cy="120" r="4" />
+        <circle class="data-point" cx="90" cy="110" r="4" />
+        <circle class="data-point" cx="140" cy="85" r="4" />
+        <circle class="data-point" cx="190" cy="80" r="4" />
+        <circle class="data-point" cx="240" cy="50" r="4" />
+        <circle class="data-point" cx="290" cy="40" r="4" />
+        <circle class="data-point" cx="340" cy="30" r="4" />
+        <circle class="data-point" cx="380" cy="20" r="4" />
+      </svg>
+    </section>
 
     <h2>Mission</h2>
     <div>
